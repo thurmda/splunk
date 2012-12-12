@@ -1,0 +1,25 @@
+#!/usr/local/bin/node
+/*
+#!/usr/bin/node
+*/
+
+var argv = require('optimist')
+    .usage('Usage:\n $0 -s "SEARCH" [-h HOST ] [-p PORT]')
+    .demand(['s'])
+    .argv;
+
+var splunk = require('../lib/splunk');
+console.log(' Search = ' + argv.s);
+
+var options = {};
+if(argv.h){
+    options.hostname = argv.h
+}
+if(argv.p){
+    options.port = argv.port
+}
+
+var stream = new splunk.Stream(argv.s, options);
+stream.on('object', function(o){
+    console.dir(o);
+});
