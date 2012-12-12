@@ -1,13 +1,14 @@
-var splunk = require('./lib/splunk');
+var splunk = require('../lib/splunk');
 var redis = require('redis');
-var rx = /POST.*index.php\?id=(\d+)/;
 
 var redisClient = redis.createClient();
 var count = 0;
 var hits = {};
-redisClient.del('hits:*');
+var rx = /POST.*index.php\?id=(\d+)/;
 /*
-redis-cli -h 192.168.10.111 KEYS "hits*" |\
+    might want to delete keys before running
+
+   redis-cli -h 192.168.10.111 KEYS "hits*" |\
     xargs redis-cli -h 192.168.10.111 DEL
 */
 

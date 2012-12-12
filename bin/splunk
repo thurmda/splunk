@@ -1,15 +1,15 @@
 #!/usr/local/bin/node
 /*
+node might be here instead:
+
 #!/usr/bin/node
+
 */
 
 var argv = require('optimist')
-    .usage('Usage:\n $0 -s "SEARCH" [-h HOST ] [-p PORT]')
+    .usage('Usage:\n $0 -s "SEARCH" [-h HOST ] [-p PORT] [-a auth]')
     .demand(['s'])
     .argv;
-
-var splunk = require('../lib/splunk');
-console.log(' Search = ' + argv.s);
 
 var options = {};
 if(argv.h){
@@ -18,6 +18,13 @@ if(argv.h){
 if(argv.p){
     options.port = argv.port
 }
+if(argv.a){
+    options.auth = argv.a
+}
+
+var splunk = require('../lib/splunk');
+
+console.log(' Search = ' + argv.s);
 
 var stream = new splunk.Stream(argv.s, options);
 stream.on('object', function(o){
